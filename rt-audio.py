@@ -2,15 +2,30 @@ from RealtimeSTT import AudioToTextRecorder
 from colorama import Fore, Back, Style
 import colorama
 import os
+import socket
 
 if __name__ == '__main__':
 
     print("Initializing RealtimeSTT test...")
 
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind((socket.gethostname(), 8080))
+    server.listen(1)
+    print(socket.gethostname())
+    
+    print("Listening for clients.")
+    c, addr = None, None
+    while c is None:
+        c, addr = server.accept()
+    print("Found a client.")
+
     colorama.init()
 
     full_sentences = []
     displayed_text = ""
+    
+    def send_text():
+        pass
 
     def clear_console():
         os.system('clear' if os.name == 'posix' else 'cls')
@@ -18,7 +33,7 @@ if __name__ == '__main__':
     def text_detected(text):
         global displayed_text
         sentences_with_style = [
-            f"{Fore.YELLOW + sentence + Style.RESET_ALL if i % 2 == 0 else Fore.CYAN + sentence + Style.RESET_ALL} "
+            f"{Fore.YELLOW + sentence + Style.RESET_ALL if i % 2 == 0 else Fore.CYAN + sentence + Style.RESET_ALL}\n\n"
             for i, sentence in enumerate(full_sentences)
         ]
         new_text = "".join(sentences_with_style).strip() + " " + text if len(sentences_with_style) > 0 else text
@@ -35,30 +50,33 @@ if __name__ == '__main__':
 
     recorder_config = {
         'spinner': False,
-        'model': 'medium',
+        'model': 'large',
         'language': 'ko',
         'silero_sensitivity': 0.4,
         'webrtc_sensitivity': 2,
-        'post_speech_silence_duration': 0.4,
-        'min_length_of_recording': 0,
+        'post_speech_silence_duration': 0.3,
+        'min_length_of_recording': 3,
         'min_gap_between_recordings': 0,
-        'enable_realtime_transcription': False,
-        'realtime_processing_pause': 0.2,
-        'realtime_model_type': 'medium',
-        'on_realtime_transcription_update': text_detected, 
+        'enable_realtime_transcription': False
     }
 
     recorder = AudioToTextRecorder(**recorder_config)
     print("Prompt:", recorder.initial_prompt)
-    import time
-    time.sleep(4)
     
     clear_console()
     print("Say something...", end="", flush=True)
-
+        
     try:
+        sentence_count = len(full_sentences)
         while True:
             recorder.text(process_text)
+            if new_count:=len(full_sentences) > sentence_count:
+                sentence_count = new_count
+                if full_sentences:
+                    c.send(full_sentences[-1].encode())
+            
     except KeyboardInterrupt:
         recorder.abort()
+        c.close()
+        server.close()
         pass

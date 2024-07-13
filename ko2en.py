@@ -1,21 +1,67 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
-
+from transformers import pipeline
+import anthropic
 load_dotenv()
+    
+    
+class OpusMT_KO2EN:
+    def __init__(self):
+        self.classifier = pipeline(
+            device=0, model="Helsinki-NLP/opus-mt-ko-en")
 
-client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+    def translate(self, text):
+        return self.classifier(text)[0]["translation_text"]
 
-text = """
-너무 슬퍼 가지고 계속 영상을 보면서 설교를 제가 들으면서 그렇게 많이 울었거든요. 그리고 후회를 많이 했거든요. 만 10년 동안에 옥 목사님하고 저하고 거래 관계가 아니었거든요. 관계였어요. 주님과 우리 사이가 거래 관계가 되면 가론유다 처럼 돼요. 아이고 이게 뭐 11조 내면은 뭐 복준 되더니. 이게 뭐지 이게? 이게 다 거래 관계에서 나오는 시험이에요. 1년치 월급을 깨뜨리면. 주님은 10년지로 대답해 주시겠지? 예전에 참 가슴 아픈 설교들을 윗대 어른 목사님들에게 제가 들은 적이 있습니다. 11주 하면. 엄청 복을 받는다 그러면서 입에도 담기도 어려운 그런. 좀. 아닌 것 같은 이런 설명을 하는 걸 많이 봤거든요. 여러분 우리가 11주 하면은 막 한 10배씩 더 부자가 되고 주일에 성수하느라고 가게로 문을 놔두면 토요일에 갑자기 매상이 3배 오르고 막 이렇게 설교하는 거는 그게 잘 된 설명 아닙니다. 그거는 거래를 자꾸 터넌 설교예요. 고간이 차고 넘치더라. 그래서 시빌주 하는 건, 이거는 그래요, 그래. 이 여인이요. 주님과 거래를 트는 게 아니에요. 내가 한번 투자해 봐야 되겠다 그래서 1년치로 들이프었더니. 주시더라. 이거 거래예요, 거래. 오늘 우리가 예수 믿을 때 자꾸 이렇게 거래 키우더라도 자꾸 거래를 하는 사람 들이 있잖아요. 주님과는 관계예요. 가게 문 닫아가지고요. 주인은 주로 가족들이 시켜 먹는데 내가 주를 위하여 결단하고 가게 문을 닫아가지고 굉장히 매상의 손해를 받는데 그 매상이 손해가 되는 월 매출을 계산할 때마다 나를 깨트린 이 일에 대하여 참 기쁨을 가지고 그렇게 가져가는 건 관계에서만 나오는 거예요. 가론유단은 예수님을 거래의 대상으로 생각했잖아요. 능력있고 인기 좋은 예수님을 만나가지고 이분을 통해서 한번 내가 원하는 일들을 해봐야 되겠다. 그랬더니 이게 점점 멀어지니까 이게 뭐야? 그래가지고 예수님을 배신해 버리잖아요. 저는요, 목표를 하다가 큰욱 상처를 받는 게 이런 일이에요. 10년 20년을 같이 정말 좋은 관계를 지냈는데 하루아침에 관계를 끊고  저를 배신하는 이런 일들이 지난 20년 동안 많지는 않았습니다. 몇 번 있었습니다. 너무 슬픈거에요 그게. 저 사람은 나를 거래로 다가왔구나 스물학교의 목사님들한테 제가 처음에 만났을 때 눈물로 흡수했습니다 여러분들하고 나 하고 얼마나 이게 위험한지 아느냐고 우리 교회에 신학교 당일 때부터 교육전사로 들어온 이 사람들은요. 그저께도. 어떤 목사님이. 3라니제. 끝. 화면으로. 제 얼굴이 나오는데 부부가. 하여튼 눈이 붓도록 울었대요. 그리고 또 월요일날도 지금 기억이 지금 가물가물한데 월요일날도. 또 막 또 하여튼 그렇게 울었대요 왜 그렇습니까? 우리 교회에 교육전사 때부터 들어와 가지고 같이 지내는 그 관계 속에서. 그래가 아니라 하던 주고받고 이런 게 없어. 교회 도 조그만할 때 들어왔으니까요. 관계가 형성이 된 거예요. 저도 그랬거든요. 옥하노 목사님이 이제 교회에 개척해라 그래서 전적으로 다 이제 후원을 해 주셔가지고 그렇게 교회가 아름답게 시작이 됐는데 그 다음 우리 교회는 개 척 시작할 때부터 하나님이 형통회복을 주셨거든요 그래서 이제 한 한 달 두 달 지났는데 막 교회가 너무 잘 되는 거예요 그래서 주일날 오전에는 막 말로 말없이 행복했는데요 그렇게 행복하게 이제 막 점심까지 교회에서 다 먹고 그렇다고 집에 가면은 막 슬퍼서 못 견디겠는 거예요 그때 그 사랑의 교회에서 2시에 예배를 드렸던 걸로 기억이 나는데요 집에 와 가지고 옥하노 목사님 말씀을 못 잊어 가지고 이제 인터넷으로 그 사랑의 교회 홈페이지 들어가서 생중계로 예배를 드리면은 하임없이 우는 거예요 그리고 교체 관계에 너무 후회가 되는 거예요 자꾸. 바로 몇 시간 전 오전에는 아니 개첩교회인데 막 너는 거 막 몰려오고 좋은 분들이 많고 그래서 그렇게 행복했는데 딱 오후에 집에 들어가면서부터 너무 슬퍼가지고 계속 영상을 보면서 설교를 제가 들으면서 그렇게 많이 울었거든요. 그리고 후회를 많이 했거든요. 왜 그렇습니까? 만 10년 동안에 옥 목사님하고 저하고 거래 관계가 아니었거든요. 관계였어요. 그럼요 다 틀엄대요. 뭐 이게 뭐 11조 내면은 뭐 복준 되더니. 이게 뭐지 이게? 이게 다 거래 관계에서 나오는 시험이에요.
-"""
 
-response = client.chat.completions.create(
-  model="gpt-3.5-turbo-0125",
-  messages=[
-    {"role": "system", "content": "You are a helpful assistant designed to translate text from Korean Christian sermon into english. If there are any Bible quotes, please use KJV bible translation."},
-    {"role": "user", "content": text}
-  ]
-)
+class OpenAITranslate:
+    def __init__(self, api_key=os.environ["OPENAI_API_KEY"]):
+        self.client = OpenAI(api_key=api_key)
 
-print(response.choices[0].message.content)
+    def translate(self, context, text):
+        if context:
+            messages = [
+                {"role": "system", "content": """
+                    Please translate text from a Korean Christian sermon into english.
+                    If there are Bible quotes, use the King James Version. 
+                    """},
+                {"role": "user", "content": "Do not translate this; use them as context for the next translation: " + context},
+                {"role": "user", "content": f"Translate the following Korean text to English: {text}"}
+            ]
+        else:
+            messages = [
+                {"role": "system", "content": """
+                    Please translate text from a Korean Christian sermon into solely english.
+                    """},
+                {"role": "user", "content": f"Translate the following Korean text to English: {text}"}
+            ]
+
+        response = self.client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=messages
+        )
+        return response.choices[0].message.content
+
+
+class ClaudeTranslate:
+    def __init__(self, api_key):
+        self.client = anthropic.Anthropic(api_key=api_key)
+
+    def translate(self, context, text):
+        if context:
+            messages = [
+                {"role": "user",
+                    "content": f"""Use these sentence(s) as context for the next translation: "{context}". Then, translate the following Korean sentence(s) to English; only output the translation: {text}"""},
+                {"role": "assistant", "content": "Translation:"}
+            ]
+        else:
+            messages = [
+                {"role": "user", "content": f"Translate the following Korean text to English. Do not summarize, only translate: {text}"}
+            ]
+        message = self.client.messages.create(
+            model="claude-3-5-sonnet-20240620",
+            max_tokens=1024,
+            messages=messages
+        )
+        return message.content[0].text
