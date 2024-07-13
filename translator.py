@@ -1,4 +1,4 @@
-from ko2en import OpusMT_KO2EN, ClaudeTranslate, OpenAITranslate
+from modules.translate.ko2en import OpusMT_KO2EN, ClaudeTranslate, OpenAITranslate
 import socket
 import threading
 import os
@@ -12,7 +12,7 @@ def connect_clients(connected_clients: list, server: socket):
         print(f"Connected by {addr}")
         connected_clients.append(client)
 
-def main(method="local", context_size=3):
+def main(context_size=3):
     # Connect to Korean transcriber
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((socket.gethostname(), 8080))
@@ -59,4 +59,3 @@ def main(method="local", context_size=3):
 
 if __name__ == "__main__":
     main()
-    # print(socket.gethostname())
